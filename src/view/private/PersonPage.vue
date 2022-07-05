@@ -32,6 +32,25 @@
       handleSelect(key, keyPath) {
         console.log(key, keyPath);
       }
+    },
+    mounted() {
+      
+      this.$axios({
+        method: 'post',
+        url: '/auth/auth/person/islogin',
+        headers: {'token':localStorage.getItem('token')}
+      }).then((res) => {
+            if(res.data.code != 200) {
+                this.$router.push({
+                    path: '/login'
+                })
+            }
+        }).catch((err) => {
+            console.log(err);
+            this.$router.push({
+                    path: '/login'
+                })
+        })
     }
   }
 </script>

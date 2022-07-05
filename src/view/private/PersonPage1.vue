@@ -1,11 +1,11 @@
-<template>
+<template slot-scope="scope">
     <div>
         <el-container>
             <el-header style="text-align: center;">
-                <el-input class="title" placeholder="请输入标题"></el-input>
+                <el-input class="title" v-model="title" placeholder="请输入标题"></el-input>
             </el-header>
             <el-main style="text-align: center;">
-                <textarea class="content"></textarea>
+                <textarea class="content" v-model="content"></textarea>
             </el-main>
             <div style="margin-left: 1200px;">
                 <el-button style="" @click="submit">提交</el-button>
@@ -20,12 +20,32 @@
     export default {
         data () {
             return {
-                
+                title: '',
+                content: ''
             }
         },
         methods: {
             submit() {
-                alert(123)
+                let data = {};
+                data['title'] = this.title;
+                data['content'] = this.content;
+                this.$axios({
+                    method: 'post',
+                    url: '/auth/auth/person/submit',
+                    headers: {'token':localStorage.getItem('token')},
+                    data: data
+                }).then((res) => {
+                    if(res.data.code == 200) {
+                        this.$router.push({
+                            path: '/login'
+                        })
+                    }
+                }).catch((err) => {
+                    console.log(err);
+                    this.$router.push({
+                            path: '/login'
+                        })
+                })
             }
         }
     }

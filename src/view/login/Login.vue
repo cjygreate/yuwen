@@ -54,14 +54,25 @@
     },
     methods: {
       submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            alert('submit!');
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
+        let data = this.ruleForm;
+        this.$axios({
+            method: 'post',
+            url: '/api/verse/user/login',
+            data: data
+        }).then((res) => {
+            if(res.data.code == 200) {
+                console.log(res.data.object)
+                localStorage.setItem("token", res.data.object);
+                this.$router.push({
+                    path: '/personPage'
+                })
+            }
+        }).catch((err) => {
+            console.log(err)
+            this.$router.push({
+              path: '/personPage'
+            })
+        })
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();

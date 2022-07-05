@@ -22,6 +22,7 @@
         width: 100%;
         height: 100%;
         background-image:url(../assets/cover.png);
+        background-size: cover;
     }
 
 
