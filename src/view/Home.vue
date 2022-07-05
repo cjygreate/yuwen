@@ -2,16 +2,11 @@
     <div id="home">
         <div id="search">
             <div class="head-title">
-                <h1 style="display: inline-block;">{{msg}}</h1>
-                <div @click="login" style="position: absolute; right: 200px; top: 10px;">
-                    <el-avatar class="wo" :size="40"><i class="el-icon-user"></i></el-avatar>
-                        <el-link v-if="isLogin" type="primary">注销</el-link>
-                </div>
-                
+                <h1 style="display: inline-block;">{{msg}}</h1> 
             </div>
             <br/>
             <el-input class="input" v-model="param"></el-input><el-button class="search" icon="el-icon-search" @click="query">搜索</el-button>
-            <el-button type="primary" @click="privatePage()">我的</el-button>
+            <el-button type="primary" @click="privatePage()">分类</el-button>
         </div>
         
         <br/>
@@ -21,7 +16,7 @@
                     <h2>{{title}}</h2>
                 </li>
                 <br/>
-                <div v-for="item in contentList"><li><h2>{{item}}</h2></li><br/></div>
+                <div v-for="item in contentList" :key="item"><li><h2>{{item}}</h2></li><br/></div>
             </ul>
         </div>
     </div>
@@ -37,7 +32,6 @@
                 param: "",
                 contentList:[],
                 title: "",//标题
-                isLogin: false, //是否登录
             }
         },
         methods: {
@@ -68,11 +62,6 @@
                 this.$router.push({
                     path: '/personPage'
                 })
-            },
-            login() {
-                this.$router.push({
-                    path: '/login'
-                })
             }
         },
     }
@@ -90,10 +79,5 @@
         text-align: center;
     }
 
-
-    .wo {
-        cursor: pointer;
-    }
-    
 
 </style>
